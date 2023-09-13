@@ -42,17 +42,17 @@ class FirebaseDB:
 # ==============================================================================
 
 
-    def update_stock_data(self, data):
+    def update_db_data(self, data):
         """Update the stock data in the Firebase database."""
-        self.db_ref.update({"tester": data[0], "tester2": data[1]})
+        self.db_ref.update({"Warren": data["warren"], "West": data["west"], "Marciano": data["marciano"], "Granby": data["granby"], "Meta": data["meta"]})
 
-    def get_stock_meta(self):
+    def get_db_meta(self):
         """Get the stock metadata from the Firebase database."""
-        return self.db_ref.child("stock").child("meta").get()
+        return self.db_ref.child("Meta").get()
 
-    def get_stock_data(self):
+    def get_db_data(self):
         """Get the stock data from the Firebase database."""
-        return self.db_ref.child("stock").child("data").get()
+        return self.db_ref.child("Warren").get()
 
 
 

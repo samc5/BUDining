@@ -71,10 +71,17 @@ def get_menu_items(meals):    #returns a list of lists of menu items with title,
                 station = 'none'
             else:   
                 station = i.find('strong', class_='js-sortby-station').get_text()
+            if meals[0] is not None and i in meals[0]:
+                meal_type = 'breakfast'
+            elif meals[1] is not None and i in meals[1]:
+                meal_type = 'lunch'
+            elif meals[2] is not None and i in meals[2]:
+                meal_type = 'dinner'
+
             
             #print(title)
             #print(ingredients)
-            ans.append([title, ingredients, station])
+            ans.append([title, ingredients, station, meal_type])
         #print(i.find('h4', class_='js-nutrition-open-alias menu-item-title').get_text())
     return ans
 
@@ -171,30 +178,3 @@ def separate_important_items(sorted_menu): #return two dictionaries, one with th
             ans2[i] = sorted_menu[i]
     arr = [ans, ans2]
     return arr
-
-
-
-
-
-
-# #print statements for sort_important_items, print a "-------------------------" before and after station name
-# for i in sort_items_by_station(get_gf_vegetarian_menu(meals)):
-#     print("-------------------------")
-#     print(i)
-#     print("-------------------------")
-#     for j in sort_important_items(sort_items_by_station(get_gf_vegetarian_menu(meals)))[i]:
-#         print(j[0])
-
-#print statements for separate_important_items, print a "-------------------------" before and after station name
-
-
-# print(separate_important_items(sort_items_by_station(get_gf_vegetarian_menu(get_meals(url))))[0])
-# print("-------------------------")
-# print(separate_important_items(sort_items_by_station(get_gf_vegetarian_menu(get_meals(url))))[1])
-
-# for i1 in separate_important_items(sort_items_by_station(get_gf_vegetarian_menu(get_meals(url))))[1]:
-#     print("-------------------------")
-#     print(i1)
-#     print("-------------------------")
-#     for j1 in separate_important_items(sort_items_by_station(get_gf_vegetarian_menu(get_meals(url))))[1][i1]:
-#         print(j1[0])
