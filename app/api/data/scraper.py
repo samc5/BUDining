@@ -1,14 +1,16 @@
 #beautiful soup and request imports
 from bs4 import BeautifulSoup
-import requests 
+import requests
 
-url = 'https://www.bu.edu/dining/location/marciano/#menu'
+#url = 'https://www.bu.edu/dining/location/marciano/#menu'
 
+def get_url(loc):
+    return 'https://www.bu.edu/dining/location/' + loc + '/#menu'
 def get_meals(url):
     # URL of the webpage
 
     # Send an HTTP GET request to the webpage
-    response = requests.get(url, headers={'Cache-Control': 'no-cache'})
+    response = requests.get(url)
 
     # Check if the request was successful
     if response.status_code == 200:
@@ -143,8 +145,6 @@ def sort_items_by_station(menu): #sort the results of a get_gf_vegetarian_menu c
         else:
             ans[i[2]] = [i]
     return ans
-
-print(sort_items_by_station(get_gf_vegetarian_menu(get_meals(url))))
 
 
 

@@ -1,0 +1,8 @@
+- dark mode
+- render
+- firebase
+- docker
+-pylint
+- an actual readme
+- my code is not sht
+- 
