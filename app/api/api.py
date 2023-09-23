@@ -92,34 +92,3 @@ def get_meta_dict():
     """Get the metadata from the Firebase database."""
     return db.get_db_meta()
 
-def update_news_data():
-    """Update the news data."""
-    if not news.load_news_data(db):
-        with lock:
-            # only one thread can update the news data at a time.
-            # this saves API calls
-            news.save_news(db)  # save the news data to the database
-
-# ==============================================================================
-
-
-@api_bp.route("/stock_data", methods=["GET"])
-def get_stock():
-    """Return company info, ticker, previous closing prices, and current prices."""
-
-    request_time = str(datetime.now())
-    response = update_stock_data(request_time)
-
-    return Response(json.dumps(response), mimetype="application/json")
-
-
-@api_bp.route("/news_data", methods=["GET"])
-def get_news():
-    """Return the news data."""
-
-    request_time = str(datetime.now())
-    update_news_data()
-
-    response = news.get_news_data(request_time)
-
-    return Response(json.dumps(response), mimetype="application/json")

@@ -128,27 +128,43 @@ def get_menu_items(meals):    #returns a list of lists of menu items with title,
     j = 0
     for meal in meals:
         for i in meal:
+            bool = False
             j += 1
-            if i.find('h4', class_='js-nutrition-open-alias menu-item-title') is None:
-                title = 'none'
-            else:
-                title = i.find('h4', class_='js-nutrition-open-alias menu-item-title').get_text()
-                titles += title
             if i.find('aside', class_='nutrition-facts-ingredients') is None:
                 ingredients = 'none'
             else:
                 ingredients = i.find('aside', class_='nutrition-facts-ingredients').get_text()
+                titles += ingredients[-5:]
+            if i.find('h4', class_='js-nutrition-open-alias menu-item-title') is None:
+                title = 'none'
+            else:
+                title = i.find('h4', class_='js-nutrition-open-alias menu-item-title').get_text()
+                if titles.find(ingredients[-5:] + title) != -1:
+                    bool = True
+                titles += title
+
             if i.find('strong', class_='js-sortby-station') is None:
                 station = 'none'
             else:   
                 station = i.find('strong', class_='js-sortby-station').get_text()
-            if meals[0] is not None and i in meals[0]:
-                meal_type = 'breakfast'
-            elif meals[1] is not None and i in meals[1]:
-                print(titles)
-                meal_type = 'lunch'
-            elif meals[2] is not None and i in meals[2]:
-                meal_type = 'dinner'
+
+            if len(meals) == 3:
+                if meals[0] is not None and i in meals[0]:
+                    meal_type = 'breakfast'
+                elif meals[1] is not None and i in meals[1] and not bool:
+                    #print(titles)
+                    meal_type = 'lunch'
+                elif meals[2] is not None and i in meals[2]:
+                    meal_type = 'dinner'
+                else:
+                    meal_type = 'dinner'
+            elif len(meals) == 2:
+                if meals[0] is not None and i in meals[0]:
+                    meal_type = 'lunch'
+                elif meals[1] is not None and i in meals[1]:
+                    meal_type = 'dinner'
+                else:
+                    meal_type = 'dinner'
 
             
             #print(title)

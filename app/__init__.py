@@ -21,11 +21,11 @@ def hello_world():
 
 @app.route("/menu")
 def tester():
-    """runs /menu, which is incomplete, mostly so it doesn't crash"""
+    """runs /menu, which is obsolete/unecessary, mostly so it doesn't crash"""
 
-    arrays = main.separate_important_items(main.sort_items_by_station(main.get_gf_vegetarian_menu(main.get_meals(BASE_URL))))
+    #arrays = main.separate_important_items(main.sort_items_by_station(main.get_gf_vegetarian_menu(main.get_meals(BASE_URL))))
 
-    return render_template('menu.html', arr = arrays)
+    return render_template('main.html')
 
 @app.route("/menu/<loc>", methods = ["POST", "GET"])
 def result(loc):
