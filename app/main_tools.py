@@ -144,7 +144,7 @@ def sort_items_by_station(menu): #sort the results of a get_gf_vegetarian_menu c
             ans[i[2]] = [i]
     return ans
 
-print(sort_items_by_station(get_gf_vegetarian_menu(get_meals(url))))
+#print(sort_items_by_station(get_gf_vegetarian_menu(get_meals(url))))
 
 
 

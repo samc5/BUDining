@@ -1,7 +1,7 @@
 #beautiful soup and request imports
 from bs4 import BeautifulSoup
 import requests
-
+import time
 #url = 'https://www.bu.edu/dining/location/marciano/#menu'
 
 def get_url(loc):
@@ -54,6 +54,73 @@ def get_meals(url):
     else:
         print(f"Failed to retrieve the webpage (Status Code: {response.status_code})")
         return None
+    
+def meals_test(url):
+    """Fetches meals from the url, but uses the current date instead of not specifying date"""
+    # URL of the webpage
+    current_time = time.localtime()
+    yr = current_time.tm_year
+    mon = current_time.tm_mon
+    day = current_time.tm_mday
+    if mon < 10:
+        mon = '0' + str(mon)
+    yr_mon_day = str(yr) + '-' + str(mon) + '-' + str(day)
+    print(yr_mon_day)
+    # Send an HTTP GET request to the webpage
+    response = requests.get(url)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+    # Parse the HTML content of the page
+        soup1 = BeautifulSoup(response.text, 'html.parser')
+        #print(soup1)
+        print("-that was soup1-")
+        # if soup1.find('ol', {'class': 'js-menu-bydate menu-area background-opaque menubydate-active', 'data-menudate': yr_mon_day}) is None:
+        #     soup = soup1
+        #     print("condition 1")
+        # else:
+        print("condition 2")
+        soup = soup1.find('ol', {'data-menudate': yr_mon_day})
+        #print(soup)
+        if soup.find('li', class_='js-meal-period-breakfast menu-meal-period') is None:
+            breakfast = None
+        else:
+            breakfast = soup.find('li', class_='js-meal-period-breakfast menu-meal-period')
+        if soup.find('li', class_='js-meal-period-lunch menu-meal-period') is None:
+            lunch = None   
+        else:
+            lunch = soup.find('li', class_='js-meal-period-lunch menu-meal-period')
+        if soup.find('li', class_='js-meal-period-dinner menu-meal-period') is None:
+            dinner = None
+        else:
+            dinner = soup.find('li', class_='js-meal-period-dinner menu-meal-period')
+
+        #find the menu items for each meal
+        if breakfast is None:
+            breakfast_items = None
+        else:
+            breakfast_items = breakfast.find_all('li', class_='menu-item')
+        if lunch is None:
+            lunch_items = None
+        else:
+            lunch_items = lunch.find_all('li', class_='menu-item')
+        if dinner is None:
+            dinner_items = None
+        else:
+            dinner_items = dinner.find_all('li', class_='menu-item')
+        #set meals to all not-none items variables
+        meals = []
+        if breakfast_items is not None:
+            meals.append(breakfast_items)
+        if lunch_items is not None:
+            meals.append(lunch_items)
+        if dinner_items is not None:
+            meals.append(dinner_items)
+        return meals
+    else:
+        print(f"Failed to retrieve the webpage (Status Code: {response.status_code})")
+        return None
+    
 
 def get_menu_items(meals):    #returns a list of lists of menu items with title, ingredients, and station
     ans = []
@@ -92,7 +159,7 @@ Keywords for meat and gluten and random things
 """
 
 meats_list = ['chicken', 'beef', 'pork', 'salmon', 'tuna', 'shrimp', 'fish', 'turkey', 'bacon', 'sausage', 'ham', 'meat', 'meatball', 'meatballs', 'meatloaf', 'crab', 'lobster']
-gluten_list = ['wheat', 'barley', 'orzo', 'calise', 'malt', 'potato roll', 'focaccia', 'dough croissant pain', 'pita', 'assorted cookies', 'durum', 'create your own noodle salad']
+gluten_list = ['wheat', 'barley', 'orzo', 'calise','malted', 'potato roll', 'focaccia', 'dough croissant pain', 'pita', 'assorted cookies', 'durum', 'create your own noodle salad']
 sg_list = ['fresh basil', 'pomodoro sauce', 'marinara sauce', 'olive oil', 'grill works']
 def contains_meat(menu_item): #returns true if an item contains a meat keyword
     for i in meats_list:

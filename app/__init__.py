@@ -2,6 +2,13 @@
 from flask import Flask, render_template
 """main_tools for the main functions of the website."""
 import main_tools as main
+"""os for the os.path.join function."""
+import os
+import sys
+sys.path.append('\\api')
+sys.path.append('\\api\\data')
+from api import api
+#sys.path = [curr_path]
 app = Flask(__name__)
 
 
@@ -24,7 +31,18 @@ def tester():
 def result(loc):
     """The main sever function for now, runs the website based on the location of dining hall"""
     url = 'https://www.bu.edu/dining/location/' + loc + '/#menu'
-    arrays = main.separate_important_items(main.sort_items_by_station(main.get_gf_vegetarian_menu(main.get_meals(url))))
+    #file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'api/api.py')
+    #update data if needed
+    api.update_data(False)
+    if loc == "warren":
+        arrays = api.get_warren_dict()
+    elif loc == "west":
+        arrays = api.get_west_dict()
+    elif loc == "marciano":
+        arrays = api.get_marciano_dict()
+    else:
+        arrays = api.get_granby_dict()
+    #arrays = main.separate_important_items(main.sort_items_by_station(main.get_gf_vegetarian_menu(main.get_meals(url))))
     return render_template('menu.html', arr = arrays)
 
 if __name__ == "__main__":  # true if this file NOT imported

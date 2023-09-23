@@ -13,9 +13,12 @@ class FirebaseDB:
 
     def __init__(self):
         """Initialize the FirebaseDB class."""
-
-        # check if serviceAccountKey.json exists
-        if not os.path.exists("serviceAccountKey.json"):
+        print(os.path.exists("serviceAccountKey.json"))
+        #print(os.path.abspath("serviceAccountKey.json"))
+        file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'serviceAccountKey.json')
+        print(file_path)
+        # check if serviceAccountKey.json exists using the absolute path
+        if "serviceAccountKey.json" not in file_path:
             # throw an error
             raise FileNotFoundError(
                 """The serviceAccountKey.json file does not exist.\n
@@ -29,7 +32,7 @@ class FirebaseDB:
             7. Place the serviceAccountKey.json file in the root directory of the project."""
             )
 
-        cred = credentials.Certificate("serviceAccountKey.json")
+        cred = credentials.Certificate(file_path)
 
         # initialize the app with a service account, granting admin privileges
         firebase_admin.initialize_app(cred, {
@@ -43,17 +46,25 @@ class FirebaseDB:
 
 
     def update_db_data(self, data):
-        """Update the stock data in the Firebase database."""
+        """Update the nutrition data in firebase database."""
         self.db_ref.update({"Warren": data["warren"], "West": data["west"], "Marciano": data["marciano"], "Granby": data["granby"], "Meta": data["meta"]})
 
     def get_db_meta(self):
-        """Get the stock metadata from the Firebase database."""
+        """Get the metadata from firebase database."""
         return self.db_ref.child("Meta").get()
 
-    def get_db_data(self):
-        """Get the stock data from the Firebase database."""
+    def get_warren(self):
+        """Get the daily menu from Warren from the Firebase database."""
         return self.db_ref.child("Warren").get()
-
+    def get_west(self):
+        """Get the daily menu from West from the Firebase database."""
+        return self.db_ref.child("West").get()
+    def get_marciano(self):
+        """Get the daily menu from Marciano from the Firebase database."""
+        return self.db_ref.child("Marciano").get()
+    def get_granby(self):
+        """Get the daily menu from Granby from the Firebase database."""
+        return self.db_ref.child("Granby").get()
 
 
 # db = FirebaseDB()

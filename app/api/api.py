@@ -2,13 +2,20 @@
 
 import json
 
+import sys
+sys.path.append('\\data')
 from flask import Blueprint, Response
-from data import firebase_db
-from data import scraper
+#import firebase_db
+#import scraper
+from api.data import firebase_db
+from api.data import scraper
+#from data import firebase_db
+#from data import scraper
 #from api.data import data
 #from api.data import firebase_db
 import time
 from datetime import datetime
+
 # create a api blueprint
 api_bp = Blueprint("API", __name__)
 
@@ -25,16 +32,20 @@ def update_data(forced):
     if not forced:
         if check_metadata():
             return response
-    else:
-        warren = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("warren")))))
-        west = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("west")))))
-        marciano = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("marciano")))))
-        granby = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("granby")))))
-        lt = time.localtime()
-        meta = {"last_updated": {"tm_year": lt.tm_year, "tm_mon": lt.tm_mon, "tm_mday": lt.tm_mday, "tm_hour": lt.tm_hour, "tm_min": lt.tm_min, "tm_sec": lt.tm_sec, "tm_yday": lt.tm_yday}}
-        response = {"warren": warren, "west": west, "marciano": marciano, "granby": granby, "meta": meta}
-        db.update_db_data(response)
-        return response
+    # warren = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("warren")))))
+    # west = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("west")))))
+    # marciano = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("marciano")))))
+    # granby = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("granby")))))
+    warren = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.meals_test(scraper.get_url("warren")))))
+    west = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.meals_test(scraper.get_url("west")))))
+    marciano = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.meals_test(scraper.get_url("marciano")))))
+    granby = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.meals_test(scraper.get_url("granby")))))
+    lt = time.localtime()
+    meta = {"last_updated": {"tm_year": lt.tm_year, "tm_mon": lt.tm_mon, "tm_mday": lt.tm_mday, "tm_hour": lt.tm_hour, "tm_min": lt.tm_min, "tm_sec": lt.tm_sec, "tm_yday": lt.tm_yday}}
+    response = {"warren": warren, "west": west, "marciano": marciano, "granby": granby, "meta": meta}
+    print("down to update data")
+    db.update_db_data(response)
+    return response
 
 
 # ==============================================================================
@@ -47,7 +58,7 @@ def check_metadata():
     else:
         return False
 
-update_data(True)
+#update_data(True)
 
 def update_stock_data(request_time):
     """Update the stock data."""
@@ -65,6 +76,21 @@ def update_stock_data(request_time):
 
     return response
 
+def get_warren_dict():
+    """Get the daily menu from Warren from the Firebase database."""
+    return db.get_warren()
+def get_west_dict():
+    """Get the daily menu from West from the Firebase database."""
+    return db.get_west()
+def get_marciano_dict():
+    """Get the daily menu from Marciano from the Firebase database."""
+    return db.get_marciano()
+def get_granby_dict():
+    """Get the daily menu from Granby from the Firebase database."""
+    return db.get_granby()
+def get_meta_dict():
+    """Get the metadata from the Firebase database."""
+    return db.get_db_meta()
 
 def update_news_data():
     """Update the news data."""
