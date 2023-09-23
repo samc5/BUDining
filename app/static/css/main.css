@@ -1,0 +1,22 @@
+/* Breakfast: brown-orange */
+/* Lunch: green */
+/* Dinner: blue */
+.breakfast {
+    background-color: #8B4000;
+}
+.lunch {
+    background-color: #376331;
+}
+.dinner {
+    background-color: #0000FF;
+}
+
+.breakfast_text {
+    color: #8B4000;
+}
+.lunch_text {
+    color: #376331;
+}
+.dinner_text {
+    color: #0000FF;
+}

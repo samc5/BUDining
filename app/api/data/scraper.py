@@ -124,12 +124,16 @@ def meals_test(url):
 
 def get_menu_items(meals):    #returns a list of lists of menu items with title, ingredients, and station
     ans = []
+    titles = ""
+    j = 0
     for meal in meals:
         for i in meal:
+            j += 1
             if i.find('h4', class_='js-nutrition-open-alias menu-item-title') is None:
                 title = 'none'
             else:
                 title = i.find('h4', class_='js-nutrition-open-alias menu-item-title').get_text()
+                titles += title
             if i.find('aside', class_='nutrition-facts-ingredients') is None:
                 ingredients = 'none'
             else:
@@ -141,6 +145,7 @@ def get_menu_items(meals):    #returns a list of lists of menu items with title,
             if meals[0] is not None and i in meals[0]:
                 meal_type = 'breakfast'
             elif meals[1] is not None and i in meals[1]:
+                print(titles)
                 meal_type = 'lunch'
             elif meals[2] is not None and i in meals[2]:
                 meal_type = 'dinner'
@@ -148,7 +153,8 @@ def get_menu_items(meals):    #returns a list of lists of menu items with title,
             
             #print(title)
             #print(ingredients)
-            ans.append([title, ingredients, station, meal_type])
+            ans.append([title, ingredients, station, meal_type, j])
+           #print(ans[-1])
         #print(i.find('h4', class_='js-nutrition-open-alias menu-item-title').get_text())
     return ans
 
