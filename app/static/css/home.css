@@ -1,0 +1,110 @@
+
+#home-tabs {
+    background-color: #2ab2bf;
+  }
+  
+  #home-tabs li a {
+    color: white;
+  }
+  
+  #home-tabs li a:hover {
+    background-color: #218891;
+  }
+  
+  #collegeList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #collegeList li {
+    margin-top: -1px;
+    text-decoration: none;
+    color: black;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  #myInput {
+    background-image: url('/css/searchicon.png');
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+  }
+  
+  #collegeList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  #collegeList li a {
+    border: 1px solid #ddd;
+    margin-top: -1px;
+    background-color: #f6f6f6;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 15px;
+    color: black;
+    display: block
+  }
+  
+  #collegeList li a:hover:not(.header) {
+    background-color: #eee;
+  }
+  
+  button {
+    position: absolute;
+    top: 18px;
+    right: 15px;
+    background-color: inherit;
+    color: white;
+  }
+  
+  button:hover {
+    background-color: #218891;
+  }
+
+  body { 
+    padding-top: 70px; 
+    background-color: #26292e;
+
+}
+
+#test{
+    padding-top:90px;
+}
+
+#test2{
+     padding-top:90px;
+}
+
+ #test3{
+     padding-top:90px;
+}
+
+
+#test4{
+     padding-top:90px;
+}
+
+#Marciano{
+    /* Make big big */
+    font-size: 100px;
+}
+
+#Warren{
+    /* Make big big */
+    font-size: 100px;
+}
+
+#West{
+    /* Make big big */
+    font-size: 100px;
+}

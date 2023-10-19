@@ -64,6 +64,8 @@ def meals_test(url):
     day = current_time.tm_mday
     if mon < 10:
         mon = '0' + str(mon)
+    if day < 10:
+        day = '0' + str(day)
     yr_mon_day = str(yr) + '-' + str(mon) + '-' + str(day)
     print(yr_mon_day)
     # Send an HTTP GET request to the webpage
@@ -147,7 +149,7 @@ def get_menu_items(meals):    #returns a list of lists of menu items with title,
                 station = 'none'
             else:   
                 station = i.find('strong', class_='js-sortby-station').get_text()
-
+            meal_type = 'none'
             if len(meals) == 3:
                 if meals[0] is not None and i in meals[0]:
                     meal_type = 'breakfast'
@@ -181,8 +183,28 @@ Keywords for meat and gluten and random things
 """
 
 meats_list = ['chicken', 'beef', 'pork', 'salmon', 'tuna', 'shrimp', 'fish', 'turkey', 'bacon', 'sausage', 'ham', 'meat', 'meatball', 'meatballs', 'meatloaf', 'crab', 'lobster']
-gluten_list = ['wheat', 'barley', 'orzo', 'calise','malted', 'potato roll', 'focaccia', 'dough croissant pain', 'pita', 'assorted cookies', 'durum', 'create your own noodle salad']
-sg_list = ['fresh basil', 'pomodoro sauce', 'marinara sauce', 'olive oil', 'grill works']
+gluten_list = ['wheat', 'barley', 'orzo', 'calise','malted', 'potato roll', 'focaccia', 'dough croissant pain', 'pita', 'assorted cookies', 'durum', 'create your own noodle salad', 'dnu - bread flat', 'roll kaiser 4']
+sg_list = ['fresh basil', 'pomodoro sauce', 'marinara sauce', 'olive oil', 'grill works', 'maple glaze']
+dairy_list = ['yogurt', 'milk', 'cheese', 'ice cream', 'butter']
+peanut_list= ['peanut', 'peanuts', 'peanut butter', 'peanutbutter']
+soy_list = ['soy', 'soybean', 'soybeans', 'soy sauce', 'tofu']
+egg_list = ['egg', 'eggs', 'omelet', 'omelets']
+tree_nut_list = ['cashew', 'pecan', 'walnut', 'almond', 'pistachio','brazil nut', 'hazelnut', 'macadamia nut', 'pine nut']
+shellfish_list = ['crab', 'lobster', 'shrimp', 'prawn', 'crawfish', 'crayfish', 'mussel', 'oyster', 'clam', 'squid', 'scallop', 'snail', 'escargot']
+pesc_meats_list = ['chicken', 'beef', 'pork', 'turkey', 'bacon', 'sausage', 'ham', 'meat', 'meatball', 'meatballs', 'meatloaf']
+wheat_list = ['wheat', 'orzo', 'calise','malted', 'durum', 'dnu - bread flat', 'roll kaiser 4', 'potato roll', 'pita', 'semolina', 'dough croissant pain', 'focaccia', 'create your own noodle', 'assorted cookies']
+sesame_list = ['sesame', 'sesame seed', 'sesame seeds', 'sesame oil', 'sesame paste', 'tahini']
+mustard_list = ['mustard']
+vegan_list = meats_list + dairy_list + egg_list
+
+def contains_flag(menu_item, flag_lists): #returns true if an item contains a flag keyword
+    for lst in flag_lists:
+        for i in lst:
+            if menu_item.find(i) != -1:
+                return True
+    return False
+
+
 def contains_meat(menu_item): #returns true if an item contains a meat keyword
     for i in meats_list:
         if menu_item.find(i) != -1:
@@ -261,9 +283,35 @@ def separate_important_items(sorted_menu): #return two dictionaries, one with th
     ans2 = {}
     arr = []
     for i in sorted_menu:
-        if i != 'Salad Bar' and i != 'Bakery' and i != 'Deli' and i != 'Home Zone' and i != 'Fiesta' and i != 'Hot Breakfast Cereals' and i != 'none':
+        if i != 'Salad Bar' and i != 'Bakery' and i != 'Deli' and i != 'Home Zone' and i != 'Fiesta' and i != 'Hot Breakfast Cereals' and i != 'Paseo' and i != 'none':
             ans[i] = sorted_menu[i]
         elif i != 'none':
             ans2[i] = sorted_menu[i]
     arr = [ans, ans2]
     return arr
+
+def filter_separated_menu(separated_menu, filter_list): #filter the separated menu dict by a list of keywords
+    ans = {}
+    ans2 = {}
+    arr = []
+    ans3 = separated_menu[0]
+    ans4 = separated_menu[1]
+    
+    for i in separated_menu[0]:
+        for j in separated_menu[0][i]:
+            #print(j[0],j[1], j[2], j[3])
+            if contains_flag(j[0].lower(), filter_list) == False and contains_flag(j[1].lower(), filter_list) == False:
+                if i in ans:
+                    ans[i].append(j)
+                else:
+                    ans[i] = [j]
+    for i in separated_menu[1]:
+        for j in separated_menu[1][i]:
+            if contains_flag(j[0].lower(), filter_list) == False and contains_flag(j[1].lower(), filter_list) == False:
+                if i in ans2:
+                    ans2[i].append(j)
+                else:
+                    ans2[i] = [j]
+    arr = [ans, ans2]
+    return arr
+
