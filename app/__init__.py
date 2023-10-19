@@ -44,8 +44,8 @@ dining_hall_list = ['Warren', 'West', 'Marciano']
 
 @app.route("/")       
 def hello_world():
-    """Return base page. Mostly so it doesn't crash"""
-    return render_template('main.html')
+    """Redirect to home page."""
+    return redirect("/home")
 
 @app.route("/home")
 def home():
