@@ -183,7 +183,7 @@ Keywords for meat and gluten and random things
 """
 
 meats_list = ['chicken', 'beef', 'pork', 'salmon', 'tuna', 'shrimp', 'fish', 'turkey', 'bacon', 'sausage', 'ham', 'meat', 'meatball', 'meatballs', 'meatloaf', 'crab', 'lobster']
-gluten_list = ['wheat', 'barley', 'orzo', 'calise','malted', 'potato roll', 'focaccia', 'dough croissant pain', 'pita', 'assorted cookies', 'durum', 'create your own noodle salad', 'dnu - bread flat', 'roll kaiser 4']
+gluten_list = ['wheat', 'barley', 'orzo', 'calise','malted', 'potato roll', 'focaccia', 'dough croissant pain', 'pita', 'assorted cookies', 'wonton skin', 'durum', 'create your own noodle salad', 'dnu - bread flat', 'roll kaiser 4']
 sg_list = ['fresh basil', 'pomodoro sauce', 'marinara sauce', 'olive oil', 'grill works', 'maple glaze']
 dairy_list = ['yogurt', 'milk', 'cheese', 'ice cream', 'butter']
 peanut_list= ['peanut', 'peanuts', 'peanut butter', 'peanutbutter']
