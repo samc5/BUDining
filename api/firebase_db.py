@@ -13,10 +13,10 @@ class FirebaseDB:
 
     def __init__(self):
         """Initialize the FirebaseDB class."""
-        print(os.path.exists("serviceAccountKey.json"))
+        #print(os.path.exists("serviceAccountKey.json"))
         #print(os.path.abspath("serviceAccountKey.json"))
         file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'serviceAccountKey.json')
-        print(file_path)
+        #print(file_path)
         # check if serviceAccountKey.json exists using the absolute path
         if "serviceAccountKey.json" not in file_path:
             # throw an error

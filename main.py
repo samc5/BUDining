@@ -5,10 +5,13 @@ from flask import request
 from flask import redirect
 import os
 import sys
-sys.path.append('\\api')
-sys.path.append('\\api\\data')
-import api
+print("pre")
+from api import api
+print("api")
+from api import firebase_db
+print("firebase")
 import scraper
+print("scraper")
 #sys.path = [curr_path]
 app = Flask(__name__)
 
