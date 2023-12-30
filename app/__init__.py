@@ -7,8 +7,8 @@ import os
 import sys
 sys.path.append('\\api')
 sys.path.append('\\api\\data')
-from api import api
-from api.data import scraper
+import api
+import scraper
 #sys.path = [curr_path]
 app = Flask(__name__)
 
@@ -51,13 +51,15 @@ def home():
 
 @app.route("/menu", methods = ["POST", "GET"])
 def tester():
-    """runs /menu, which is obsolete/unecessary, mostly so it doesn't crash"""
     if request.form:
         selected_interests = request.form.getlist('interests')
         list_restrictions = []
         for interest in selected_interests:
             list_restrictions.append(allergen_map[interest])
         #print(list_restrictions)
+        print(scraper.meals_test(BASE_URL))
+        if scraper.meals_test(BASE_URL) == "No menu":
+            return render_template('closed.html')
         api.update_data(False)
         arrays0 = {"Warren": api.get_warren_dict(), "West": api.get_west_dict(), "Marciano": api.get_marciano_dict()}
         arrays1 = []
@@ -75,25 +77,6 @@ def tester():
     #arrays = main.separate_important_items(main.sort_items_by_station(main.get_gf_vegetarian_menu(main.get_meals(BASE_URL))))
 
     return render_template('main.html')
-
-# @app.route("/menu/<loc>", methods = ["POST", "GET"])
-# def result(loc):
-#     """The main sever function for now, runs the website based on the location of dining hall"""
-#     url = 'https://www.bu.edu/dining/location/' + loc + '/#menu'
-#     #file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'api/api.py')
-#     #update data if needed
-#     api.update_data(False)
-#     if loc == "warren":
-#         arrays = api.get_warren_dict()
-#     elif loc == "west":
-#         arrays = api.get_west_dict()
-#     elif loc == "marciano":
-#         arrays = api.get_marciano_dict()
-#     else:
-#         arrays = api.get_granby_dict()
-#     #arrays = main.separate_important_items(main.sort_items_by_station(main.get_gf_vegetarian_menu(main.get_meals(url))))
-#     print(arrays)
-#     return render_template('menu.html', arr = arrays)
 
 if __name__ == "__main__":  # true if this file NOT imported
     app.debug = True        # enable auto-reload upon code change
