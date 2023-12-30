@@ -1,6 +1,6 @@
 FROM python:3.11
 
-WORKDIR /app
+WORKDIR /
 
 COPY requirements.txt .
 
@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 5000
 
-CMD ["gunicorn", "-c", "gunicorn_conf.py", "app:app"]
+CMD ["gunicorn", "-c", "gunicorn_conf.py", "main:app"]
