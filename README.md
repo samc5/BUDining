@@ -9,7 +9,7 @@ My attempt to improve the BU Dining Hall website for people like myself with die
 
 ## Launch
 My plan is to eventually host this either on render or a DO droplet but for now, you can clone it and
-`python3 app/__init__.py`  
+`python3 main.py`  
 Navigate to `http://127.0.0.1:5000/home` or `http://127.0.0.1:5000/`
 
 Select your dietary restrictions and submit the form.  
