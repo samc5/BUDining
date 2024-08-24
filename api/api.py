@@ -3,16 +3,13 @@
 import json
 
 import sys
-sys.path.append('\\data')
+#sys.path.append('\\data')
 from flask import Blueprint, Response
 #import firebase_db
 #import scraper
-import firebase_db
+from api import firebase_db
 import scraper
-#from data import firebase_db
-#from data import scraper
-#from api.data import data
-#from api.data import firebase_db
+
 import time
 from datetime import datetime
 
@@ -79,23 +76,7 @@ def check_metadata():
     else:
         return False
 
-#update_data(True)
-
-def update_stock_data(request_time):
-    """Update the stock data."""
-    response = None
-    if not stock.load_stock_data(db):
-        stock.save_closings_prices()
-        stock.save_current_prices()
-
-        # separate db update from the rest of the code
-        # this is so that the stock data will only update when necessary
-        response = stock.get_stock_data(request_time)
-        db.update_stock_data(response)
-    else:
-        response = stock.get_stock_data(request_time)
-
-    return response
+update_data(True)
 
 def get_warren_dict():
     """Get the daily menu from Warren from the Firebase database."""

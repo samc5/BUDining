@@ -76,15 +76,16 @@ def meals_test(url):
     # Parse the HTML content of the page
         soup1 = BeautifulSoup(response.text, 'html.parser')
         #print(soup1)
-        print("-that was soup1-")
+       # print("-that was soup1-")
         # if soup1.find('ol', {'class': 'js-menu-bydate menu-area background-opaque menubydate-active', 'data-menudate': yr_mon_day}) is None:
         #     soup = soup1
         #     print("condition 1")
         # else:
-        print("condition 2")
-        clear = soup1.find('aside', class_='menu-warning')
-        if clear is not None:
-            return "No menu"
+        #print("condition 2")
+        # clear = soup1.find('aside', class_='menu-warning')
+        # print(f'clear: {clear}')
+        # if clear is not None:
+        #     return "No menu"
         soup = soup1.find('ol', {'data-menudate': yr_mon_day})
         #print(soup)
         if soup.find('li', class_='js-meal-period-breakfast menu-meal-period') is None:
@@ -261,10 +262,11 @@ def get_gf_vegetarian_menu(meals):
 def sort_items_by_station(menu): #sort the results of a get_gf_vegetarian_menu call by station, into a dictionary
     ans = {}
     for i in menu:
-        if i[2] in ans:
-            ans[i[2]].append(i)
+        station = i[2].strip()
+        if station in ans:
+            ans[station].append(i)
         else:
-            ans[i[2]] = [i]
+            ans[station] = [i]
     return ans
 
 

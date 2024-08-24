@@ -5,11 +5,14 @@ from flask import request
 from flask import redirect
 import os
 import sys
+#print("why is this doing this")
+print(os.getcwd())
 print("pre")
-from api import api
-print("api")
 from api import firebase_db
 print("firebase")
+from api import api as db_api
+print("api")
+
 import scraper
 print("scraper")
 #sys.path = [curr_path]
@@ -35,7 +38,7 @@ tree_nut_list = ['cashew', 'pecan', 'walnut', 'almond', 'pistachio','brazil nut'
 shellfish_list = ['crab', 'lobster', 'shrimp', 'prawn', 'crawfish', 'crayfish', 'mussel', 'oyster', 'clam', 'squid', 'scallop', 'snail', 'escargot']
 pesc_meats_list = ['chicken', 'beef', 'pork', 'turkey', 'bacon', 'sausage', 'ham', 'meat', 'meatball', 'meatballs', 'meatloaf']
 wheat_list = ['wheat', 'orzo', 'calise','malted', 'durum', 'dnu - bread flat', 'roll kaiser 4', 'potato roll', 'pita', 'semolina', 'dough croissant pain', 'focaccia', 'create your own noodle', 'assorted cookies']
-sesame_list = ['sesame', 'sesame seed', 'sesame seeds', 'sesame oil', 'sesame paste', 'tahini']
+sesame_list = ['sesame', 'tahini']
 mustard_list = ['mustard']
 vegan_list = meats_list + dairy_list + egg_list
 
@@ -59,24 +62,28 @@ def tester():
         list_restrictions = []
         for interest in selected_interests:
             list_restrictions.append(allergen_map[interest])
-        #print(list_restrictions)
-        print(scraper.meals_test(BASE_URL))
-        if scraper.meals_test(BASE_URL) == "No menu":
-            return render_template('closed.html')
-        api.update_data(False)
-        arrays0 = {"Warren": api.get_warren_dict(), "West": api.get_west_dict(), "Marciano": api.get_marciano_dict()}
+        print(list_restrictions)
+       # print(scraper.meals_test(BASE_URL))
+        # if scraper.meals_test(BASE_URL) == "No menu":
+        #     return render_template('closed.html')
+        db_api.update_data(False)
+        arrays0 = {"Warren": db_api.get_warren_dict(), "West": db_api.get_west_dict(), "Marciano": db_api.get_marciano_dict()}
         arrays1 = []
-        arrays = api.get_warren_dict()
+        arrays = db_api.get_warren_dict()
         arrays2 = scraper.filter_separated_menu(arrays, list_restrictions)
+        # print(f'arrays0: {arrays0}')
+        successes = 0
         for i in range(len(dining_hall_list)):
-             print(i)
-             #print(arrays0[i])
-             arrays1.append(scraper.filter_separated_menu(arrays0[dining_hall_list[i]], list_restrictions))
-             #arrays[i].append(dining_hall_list[i])
-             print(f'{i} worked')
-             # add dining hall name to the array
-             #arrays[i].append(dining_hall_list[i])
-        return render_template('menu.html', arrs = arrays1, names=dining_hall_list, lenn = range(len(dining_hall_list)))
+            hall_name = dining_hall_list[i]
+            print(hall_name)
+            if arrays0[hall_name] != None:
+                arrays1.append(scraper.filter_separated_menu(arrays0[hall_name], list_restrictions))
+                successes += 1
+            else:
+                arrays1.append(scraper.filter_separated_menu(arrays0['Warren'], list_restrictions)) ## CHANGE THIS AHHH
+            print(f'{hall_name} worked')
+        
+        return render_template('menu.html', arrs = arrays1, names=dining_hall_list, lenn = range(successes))
     #arrays = main.separate_important_items(main.sort_items_by_station(main.get_gf_vegetarian_menu(main.get_meals(BASE_URL))))
 
     return render_template('main.html')
