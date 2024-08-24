@@ -79,8 +79,8 @@ def tester():
             if arrays0[hall_name] != None:
                 arrays1.append(scraper.filter_separated_menu(arrays0[hall_name], list_restrictions))
                 successes += 1
-            else:
-                arrays1.append(scraper.filter_separated_menu(arrays0['Warren'], list_restrictions)) ## CHANGE THIS AHHH
+            # else:
+            #     arrays1.append(scraper.filter_separated_menu(arrays0['Warren'], list_restrictions)) ## CHANGE THIS AHHH
             print(f'{hall_name} worked')
         
         return render_template('menu.html', arrs = arrays1, names=dining_hall_list, lenn = range(successes))
