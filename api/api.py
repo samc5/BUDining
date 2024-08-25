@@ -40,29 +40,34 @@ def update_data_gf_veg(forced):
     lt = time.localtime()
     meta = {"last_updated": {"tm_year": lt.tm_year, "tm_mon": lt.tm_mon, "tm_mday": lt.tm_mday, "tm_hour": lt.tm_hour, "tm_min": lt.tm_min, "tm_sec": lt.tm_sec, "tm_yday": lt.tm_yday}}
     response = {"warren": warren, "west": west, "marciano": marciano, "granby": granby, "meta": meta}
-    print("down to update data")
+    #print("down to update data")
     db.update_db_data(response)
     return response
 
 def update_data(forced):
+    print("checking metadata if not forced")
     response = None
     if not forced:
         if check_metadata():
             return response
-    # warren = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("warren")))))
-    # west = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("west")))))
-    # marciano = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("marciano")))))
-    # granby = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_gf_vegetarian_menu(scraper.get_meals(scraper.get_url("granby")))))4
+    time.sleep(10)
+    print("Starting warren")
     warren = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_menu_items(scraper.meals_test(scraper.get_url("warren")))))
+    time.sleep(10)
+    print("Starting west")
     west = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_menu_items(scraper.meals_test(scraper.get_url("west")))))
+    time.sleep(10)
+    print("Starting Marci")
     marciano = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_menu_items(scraper.meals_test(scraper.get_url("marciano")))))
+    time.sleep(10)
+    print("Starting Granby")
     granby = scraper.separate_important_items(scraper.sort_items_by_station(scraper.get_menu_items(scraper.meals_test(scraper.get_url("granby")))))
     lt = time.localtime()
     meta = {"last_updated": {"tm_year": lt.tm_year, "tm_mon": lt.tm_mon, "tm_mday": lt.tm_mday, "tm_hour": lt.tm_hour, "tm_min": lt.tm_min, "tm_sec": lt.tm_sec, "tm_yday": lt.tm_yday}}
     response = {"warren": warren, "west": west, "marciano": marciano, "granby": granby, "meta": meta}
-    print("down to update data")
+    #print("down to update data")
     db.update_db_data(response)
-    return response
+    return None
 
 
 
@@ -76,7 +81,7 @@ def check_metadata():
     else:
         return False
 
-update_data(True)
+#update_data(False)
 
 def get_warren_dict():
     """Get the daily menu from Warren from the Firebase database."""

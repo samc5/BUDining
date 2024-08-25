@@ -5,16 +5,9 @@ from flask import request
 from flask import redirect
 import os
 import sys
-#print("why is this doing this")
-print(os.getcwd())
-print("pre")
 from api import firebase_db
-print("firebase")
 from api import api as db_api
-print("api")
-
 import scraper
-print("scraper")
 #sys.path = [curr_path]
 app = Flask(__name__)
 
@@ -62,11 +55,11 @@ def tester():
         list_restrictions = []
         for interest in selected_interests:
             list_restrictions.append(allergen_map[interest])
-        print(list_restrictions)
+        # print(list_restrictions)
        # print(scraper.meals_test(BASE_URL))
         # if scraper.meals_test(BASE_URL) == "No menu":
         #     return render_template('closed.html')
-        db_api.update_data(False)
+        #db_api.update_data(False)
         arrays0 = {"Warren": db_api.get_warren_dict(), "West": db_api.get_west_dict(), "Marciano": db_api.get_marciano_dict()}
         arrays1 = []
         arrays = db_api.get_warren_dict()
@@ -75,13 +68,13 @@ def tester():
         successes = 0
         for i in range(len(dining_hall_list)):
             hall_name = dining_hall_list[i]
-            print(hall_name)
+            # print(hall_name)
             if arrays0[hall_name] != None:
                 arrays1.append(scraper.filter_separated_menu(arrays0[hall_name], list_restrictions))
                 successes += 1
             # else:
             #     arrays1.append(scraper.filter_separated_menu(arrays0['Warren'], list_restrictions)) ## CHANGE THIS AHHH
-            print(f'{hall_name} worked')
+            # print(f'{hall_name} worked')
         
         return render_template('menu.html', arrs = arrays1, names=dining_hall_list, lenn = range(successes))
     #arrays = main.separate_important_items(main.sort_items_by_station(main.get_gf_vegetarian_menu(main.get_meals(BASE_URL))))

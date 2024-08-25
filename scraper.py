@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import requests
 import time
 #url = 'https://www.bu.edu/dining/location/marciano/#menu'
-
+import gc
 def get_url(loc):
     return 'https://www.bu.edu/dining/location/' + loc + '/#menu'
 def get_meals(url):
@@ -67,7 +67,7 @@ def meals_test(url):
     if day < 10:
         day = '0' + str(day)
     yr_mon_day = str(yr) + '-' + str(mon) + '-' + str(day)
-    print(yr_mon_day)
+    # print(yr_mon_day)
     # Send an HTTP GET request to the webpage
     response = requests.get(url)
 
@@ -75,8 +75,10 @@ def meals_test(url):
     if response.status_code == 200:
     # Parse the HTML content of the page
         soup1 = BeautifulSoup(response.text, 'html.parser')
-        #print(soup1)
-       # print("-that was soup1-")
+        response = None
+        gc.collect()
+        # print(soup1)
+
         # if soup1.find('ol', {'class': 'js-menu-bydate menu-area background-opaque menubydate-active', 'data-menudate': yr_mon_day}) is None:
         #     soup = soup1
         #     print("condition 1")
@@ -87,7 +89,9 @@ def meals_test(url):
         # if clear is not None:
         #     return "No menu"
         soup = soup1.find('ol', {'data-menudate': yr_mon_day})
-        #print(soup)
+        soup1 = None
+        gc.collect()
+        #print(f'soup: {soup}')
         if soup.find('li', class_='js-meal-period-breakfast menu-meal-period') is None:
             breakfast = None
         else:
@@ -288,7 +292,7 @@ def separate_important_items(sorted_menu): #return two dictionaries, one with th
     ans2 = {}
     arr = []
     for i in sorted_menu:
-        if i != 'Salad Bar' and i != 'Bakery' and i != 'Deli' and i != 'Home Zone' and i != 'Fiesta' and i != 'Hot Breakfast Cereals' and i != 'Paseo' and i != 'none':
+        if i != 'Salad Bar' and i != 'Bakery' and i != 'Deli' and i != 'Home Zone' and i != 'Fiesta' and i != 'Hot Breakfast Cereals' and i != 'Paseo' and i != 'Grill Condiments and More' and i != 'none':
             ans[i] = sorted_menu[i]
         elif i != 'none':
             ans2[i] = sorted_menu[i]
