@@ -1,8 +1,7 @@
 # BUDining
 My attempt to improve the BU Dining Hall website for people like myself with dietary restrictions
 
-## NOW HOSTED AT 
-[budining.samcowan.net](budining.samcowan.net)
+## NOW HOSTED AT [budining.samcowan.net](https://budining.samcowan.net/home)
 
 ## Features
 - Users can select dietary restrictions and allergens to avoid
