@@ -1,6 +1,8 @@
 # BUDining
 My attempt to improve the BU Dining Hall website for people like myself with dietary restrictions
 
+## NOW HOSTED AT budining.samcowan.net
+
 ## Features
 - Users can select dietary restrictions and allergens to avoid
 - The site returns the daily menu at Warren, West, Marciano, and Granby Dining Halls (sorry Fenway users)
