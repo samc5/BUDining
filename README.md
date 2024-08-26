@@ -1,7 +1,7 @@
 # BUDining
 My attempt to improve the BU Dining Hall website for people like myself with dietary restrictions
 
-## NOW HOSTED AT budining.samcowan.net
+## NOW HOSTED AT [budining.samcowan.net]
 
 ## Features
 - Users can select dietary restrictions and allergens to avoid
@@ -10,7 +10,7 @@ My attempt to improve the BU Dining Hall website for people like myself with die
 - Click on menu items to view its ingredient list
 
 ## Launch
-My plan is to eventually host this either on render or a DO droplet but for now, you can clone it and
+If you want to run this locally, you can clone the repo and do the following:
 `python3 main.py`  
 Navigate to `http://127.0.0.1:5000/home` or `http://127.0.0.1:5000/`
 
