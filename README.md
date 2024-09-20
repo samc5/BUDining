@@ -5,7 +5,7 @@ My attempt to improve the BU Dining Hall website for people like myself with die
 
 ## Features
 - Users can select dietary restrictions and allergens to avoid
-- The site returns the daily menu at Warren, West, Marciano, and Granby Dining Halls (sorry Fenway users)
+- The site returns the daily menu at Warren, West, and Marciano dining halls (sorry Fenway users)
 - Daily menu data is stored on Firebase
 - Click on menu items to view its ingredient list
 
@@ -20,7 +20,7 @@ Updating Firebase each day takes ~30 seconds, so if you are the first user of th
   
 **Big Disclaimer**: 
 - BU's menu data is not always accurate, and its ingredients lists often seem unlikely or incorrect.
-- Additionally, my basic filters don't catch unusual ingredient items, so make sure to check ingredients or ask someone if something is listed that seems suspicious
+- Additionally, my hard-coded filters don't catch all unusual ingredient items, so make sure to check ingredients or ask someone if something is listed that seems suspicious
 
 ## Preview
 ![](demo.gif)
